@@ -1,0 +1,18 @@
+# Simulation outputs
+sim/*.vvp
+sim/*.vcd
+sim/
+
+# FPGA Build artifacts (Yosys, nextpnr, gowin_pack)
+build/
+
+# macOS System Files
+.DS_Store
+
+# IDE - VS Code (Optional: remove if you want to commit workspace settings)
+.vscode/
+
+# Formatter/Linter temporary or backup files
+*~
+*.bak
+*.log
