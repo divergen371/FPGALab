@@ -2,16 +2,16 @@ module top_button_demo #(
     parameter int LONG_PRESS_LIMIT = 81000000  // 3秒 @ 27MHz
 ) (
     input  logic       clk,
-    input  logic       key1,  // ボタン S1 (カウントアップ: 押すと0)
-    input  logic       key2,  // ボタン S2 (リセット: 押すと0)
+    input  logic       key1,  // ボタン S2 (USR / カウントアップ: 押すと0)
+    input  logic       key2,  // ボタン S1 (RST / リセット: 押すと0)
     output logic [5:0] led    // LED 6個 (0で点灯, 1で消灯)
 );
 
-    // リセット信号の作成 (ボタンS2は押すと0なので、反転してアクティブHighの同期リセットにする)
+    // リセット信号の作成 (ボタンS1は押すと0なので、反転してアクティブHighの同期リセットにする)
     logic reset;
     assign reset = ~key2;
 
-    // デバウンス回路のインスタンス化 (S1ボタンのチャタリング除去)
+    // デバウンス回路のインスタンス化 (S2ボタンのチャタリング除去)
     // 実機動作時はデフォルト値の LIMIT=270000 (10ms @ 27MHz) で動作
     logic key1_deb;
     debounce #(

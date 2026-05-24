@@ -39,20 +39,20 @@ module tb_top_button_demo;
         #20;
 
         // リセットをかける (key2 = 0)
-        $display("\n--- Apply Reset (S2 press) ---");
+        $display("\n--- Apply Reset (S1 press) ---");
         key2 = 1'b0;
         #30;
-        key2 = 1'b1;
+        key2 = 1'b1;  // リセット解除
         #20;
 
-        // 🚀 テスト1: ボタン S1 を短く押す (カウントアップの検証)
+        // 🚀 テスト1: ボタン S2 を短く押す (カウントアップの検証)
         $display("\n--- Test 1: Short Button Press (count-up) ---");
         key1 = 1'b0;  // 押す (0)
         #100;  // 10クロック分待つ (デバウンス8クロックは超えるが、長押し20クロックには満たない)
         key1 = 1'b1;  // 離す (1)
         #100;
 
-        // 🚀 テスト2: ボタン S1 を長押しする (3秒長押し模擬: 300ns = 30クロック押し続ける)
+        // 🚀 テスト2: ボタン S2 を長押しする (3秒長押し模擬: 300ns = 30クロック押し続ける)
         $display("\n--- Test 2: Long Button Press (trigger all-on) ---");
         key1 = 1'b0;  // 押し始める (0)
         #300;  // 長押しLIMIT(20クロック=200ns)を超える時間押し続ける

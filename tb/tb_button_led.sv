@@ -27,23 +27,23 @@ module tb_button_led;
         key2 = 1'b1;
         #100;
 
-        // S1 (key1) を押す (0にする)
-        $display("Press S1 (key1 = 0)");
+        // S2 (key1) を押す (0にする)
+        $display("Press S2 (key1 = 0)");
         key1 = 1'b0;
         #100;
 
-        // S1 (key1) を離す (1にする)
-        $display("Release S1 (key1 = 1)");
+        // S2 (key1) を離す (1にする)
+        $display("Release S2 (key1 = 1)");
         key1 = 1'b1;
         #100;
 
-        // S2 (key2) を押す (0にする)
-        $display("Press S2 (key2 = 0)");
+        // S1 (key2) を押す (0にする)
+        $display("Press S1 (key2 = 0)");
         key2 = 1'b0;
         #100;
 
-        // S2 (key2) を離す (1にする)
-        $display("Release S2 (key2 = 1)");
+        // S1 (key2) を離す (1にする)
+        $display("Release S1 (key2 = 1)");
         key2 = 1'b1;
         #100;
 
