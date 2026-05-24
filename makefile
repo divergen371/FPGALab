@@ -1,38 +1,32 @@
-TOP      := alu4
+# デフォルトのターゲット
+TOP      ?= button_led
 DEVICE   := GW1NR-LV9QN88PC6/I5
 BOARD    := tangnano9k
+FAMILY   := GW1N-9C
+CST      := constraints/tangnano9k.cst
 
-RTL      := rtl/alu4.sv
-TB       := tb/tb_alu4.sv
-VVP      := sim/$(TOP).vvp
-VCD      := sim/$(TOP).vcd
+RTL      := rtl/$(TOP).sv
+TB       := tb/tb_$(TOP).sv
+BUILD    := build
+SIM      := sim
+VVP      := $(SIM)/$(TOP).vvp
+VCD      := $(SIM)/$(TOP).vcd
 
-.PHONY: sim wave clean
+.PHONY: all sim wave synth pnr pack prog clean fmt
+
+all: sim
 
 sim:
-	mkdir -p sim
-	iverilog -g2012 -o $(VVP) $(RTL) $(TB)
+	mkdir -p $(SIM)
+	iverilog -g2012 -o $(VVP) rtl/*.sv $(TB)
 	vvp $(VVP)
 
 wave:
 	gtkwave $(VCD)
 
-clean-sim:
-	rm -rf sim/*.vvp sim/*.vcd build/*
-
-TOP      := counter_led
-DEVICE   := GW1NR-LV9QN88PC6/I5
-FAMILY   := GW1N-9C
-CST      := constraints/tangnano9k.cst
-
-RTL      := rtl/$(TOP).sv
-BUILD    := build
-
-.PHONY: synth pnr pack prog clean
-
 synth:
 	mkdir -p $(BUILD)
-	yosys -p "read_verilog -sv $(RTL); synth_gowin -top $(TOP) -json $(BUILD)/$(TOP).json"
+	yosys -p "read_verilog -sv rtl/*.sv; synth_gowin -top $(TOP) -json $(BUILD)/$(TOP).json"
 
 pnr: synth
 	nextpnr-himbaechel \
@@ -46,12 +40,10 @@ pack: pnr
 	gowin_pack -d $(FAMILY) -o $(BUILD)/$(TOP).fs $(BUILD)/$(TOP)_pnr.json
 
 prog: pack
-	openFPGALoader -b tangnano9k $(BUILD)/$(TOP).fs
+	openFPGALoader -b $(BOARD) $(BUILD)/$(TOP).fs
 
 clean:
-	rm -rf $(BUILD)
-
-.PHONY: fmt
+	rm -rf $(BUILD) $(SIM)
 
 fmt:
 	verible-verilog-format --flagfile=.verible-format --inplace rtl/*.sv tb/*.sv
