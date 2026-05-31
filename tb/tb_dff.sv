@@ -1,5 +1,4 @@
-`timescale 1ns / 1ps
-`default_nettype none
+`timescale 1ns / 1ps `default_nettype none
 
 module tb_dff;
 
@@ -11,10 +10,10 @@ module tb_dff;
 
     // --- テスト対象モジュール (DUT) のインスタンス化 ---
     dff uut (
-        .clk   (clk),
-        .rst_n (rst_n),
-        .d     (d),
-        .q     (q)
+        .clk  (clk),
+        .rst_n(rst_n),
+        .d    (d),
+        .q    (q)
     );
 
     // --- クロック生成 ---
@@ -35,24 +34,27 @@ module tb_dff;
         $display("--- Start D Flip-Flop Test ---");
 
         // 初期化とリセット
-        d = 0;
-        rst_n = 0; // リセットON
+        d     = 0;
+        rst_n = 0;  // リセットON
         #25;
-        rst_n = 1; // リセット解除
+        rst_n = 1;  // リセット解除
         $display("\n--- Reset Released ---");
 
         // クロックに合わせたデータの取り込みテスト
         // クロックの立ち上がりの直後(#1)に d を変化させる
-        @(posedge clk); #1 d = 1; // 次の立ち上がりで q=1 になるはず
-        @(posedge clk); #1 d = 0; // 次の立ち上がりで q=0 になるはず
-        @(posedge clk); #1 d = 1; // 次の立ち上がりで q=1 になるはず
-        
+        @(posedge clk);
+        #1 d = 1;  // 次の立ち上がりで q=1 になるはず
+        @(posedge clk);
+        #1 d = 0;  // 次の立ち上がりで q=0 になるはず
+        @(posedge clk);
+        #1 d = 1;  // 次の立ち上がりで q=1 になるはず
+
         // 非同期リセットのテスト
         // クロックに関係ないタイミングでリセットをかける
-        #5; 
+        #5;
         $display("\n--- Asynchronous Reset Test ---");
-        rst_n = 0; // ここで瞬時に q=0 になるはず
-        #15; 
+        rst_n = 0;  // ここで瞬時に q=0 になるはず
+        #15;
         rst_n = 1;
 
         #20;

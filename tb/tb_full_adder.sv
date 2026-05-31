@@ -1,5 +1,4 @@
-`timescale 1ns / 1ps
-`default_nettype none
+`timescale 1ns / 1ps `default_nettype none
 
 module tb_full_adder;
 
@@ -12,11 +11,11 @@ module tb_full_adder;
 
     // --- テスト対象モジュール (DUT) のインスタンス化 ---
     full_adder uut (
-        .a    (a),
-        .b    (b),
-        .cin  (cin),
-        .sum  (sum),
-        .cout (cout)
+        .a   (a),
+        .b   (b),
+        .cin (cin),
+        .sum (sum),
+        .cout(cout)
     );
 
     // --- テストシナリオ ---
@@ -32,15 +31,39 @@ module tb_full_adder;
 
         // 全8パターンのテスト
         // cin, a, b の順で 000 〜 111 まで変化させます
-        cin = 0; a = 0; b = 0; #10; // 0+0+0 = 0 (cout=0, sum=0)
-        cin = 0; a = 0; b = 1; #10; // 0+0+1 = 1 (cout=0, sum=1)
-        cin = 0; a = 1; b = 0; #10; // 0+1+0 = 1 (cout=0, sum=1)
-        cin = 0; a = 1; b = 1; #10; // 0+1+1 = 2 (cout=1, sum=0)
-        
-        cin = 1; a = 0; b = 0; #10; // 1+0+0 = 1 (cout=0, sum=1)
-        cin = 1; a = 0; b = 1; #10; // 1+0+1 = 2 (cout=1, sum=0)
-        cin = 1; a = 1; b = 0; #10; // 1+1+0 = 2 (cout=1, sum=0)
-        cin = 1; a = 1; b = 1; #10; // 1+1+1 = 3 (cout=1, sum=1)
+        cin = 0;
+        a   = 0;
+        b   = 0;
+        #10;  // 0+0+0 = 0 (cout=0, sum=0)
+        cin = 0;
+        a   = 0;
+        b   = 1;
+        #10;  // 0+0+1 = 1 (cout=0, sum=1)
+        cin = 0;
+        a   = 1;
+        b   = 0;
+        #10;  // 0+1+0 = 1 (cout=0, sum=1)
+        cin = 0;
+        a   = 1;
+        b   = 1;
+        #10;  // 0+1+1 = 2 (cout=1, sum=0)
+
+        cin = 1;
+        a   = 0;
+        b   = 0;
+        #10;  // 1+0+0 = 1 (cout=0, sum=1)
+        cin = 1;
+        a   = 0;
+        b   = 1;
+        #10;  // 1+0+1 = 2 (cout=1, sum=0)
+        cin = 1;
+        a   = 1;
+        b   = 0;
+        #10;  // 1+1+0 = 2 (cout=1, sum=0)
+        cin = 1;
+        a   = 1;
+        b   = 1;
+        #10;  // 1+1+1 = 3 (cout=1, sum=1)
 
         $display("--- Simulation Finished ---");
         $finish;
