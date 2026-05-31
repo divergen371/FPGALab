@@ -1,5 +1,4 @@
-`timescale 1ns / 1ps
-`default_nettype none
+`timescale 1ns / 1ps `default_nettype none
 
 module tb_imem;
 
@@ -23,14 +22,20 @@ module tb_imem;
         $display("--- Start Instruction Memory (ROM) Test ---");
 
         // アドレスを0から順番に変化させて、どんな命令が出てくるか確認
-        addr = 4'd0; #10;
-        addr = 4'd1; #10;
-        addr = 4'd2; #10;
-        addr = 4'd3; #10;
-        addr = 4'd4; #10;
-        
+        addr = 4'd0;
+        #10;
+        addr = 4'd1;
+        #10;
+        addr = 4'd2;
+        #10;
+        addr = 4'd3;
+        #10;
+        addr = 4'd4;
+        #10;
+
         // 範囲外や指定していないアドレスのテスト
-        addr = 4'd15; #10;
+        addr = 4'd15;
+        #10;
 
         $display("--- Simulation Finished ---");
         $finish;
